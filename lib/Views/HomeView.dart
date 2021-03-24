@@ -23,27 +23,64 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-    homeViewHeader(){
-      return AppBar(
-        automaticallyImplyLeading: false,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.settings,size: 30.0, color: Colors.white), 
-            onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=ASettings()));
+  TextEditingController searchTextEditingController = TextEditingController();
+  homeViewHeader() {
+    return AppBar(
+      automaticallyImplyLeading: false,
+      actions: <Widget>[
+        IconButton(
+            icon: Icon(Icons.settings, size: 30.0, color: Colors.white),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ASettings(),
+                  ));
             }),
-        ],
-      );
-    }
+      ],
+      backgroundColor: Colors.lightBlue,
+      title: Container(
+        margin: new EdgeInsets.only(bottom: 4.0),
+        child: TextFormField(
+          style: TextStyle(fontSize: 18.0, color: Colors.white),
+          controller: searchTextEditingController,
+          decoration: InputDecoration(
+              hintText: "Search here...",
+              hintStyle: TextStyle(color: Colors.white),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+              ),
+              filled: true,
+              prefixIcon: Icon(
+                Icons.person_pin,
+                color: Colors.white,
+                size: 30.0,
+              ),
+              suffixIcon: IconButton(
+                icon: Icon(Icons.clear, color: Colors.white),
+                onPressed: emptyTextFromField,
+              )),
+        ),
+      ),
+    );
+  }
+
+  emptyTextFromField() {
+    searchTextEditingController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: ,
       body: RaisedButton.icon(
-        onPressed: logoutUser,
-        icon: Icon(Icons.close),
-        label: Text("Sign Out")),
-    )
+          onPressed: logoutUser,
+          icon: Icon(Icons.close),
+          label: Text("Sign Out")),
+    );
   }
 
   final GoogleSignIn googleSignIn = GoogleSignIn();
